@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   teste.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 16:43:27 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/22 17:06:35 by icunha-t         ###   ########.fr       */
+/*   Created: 2024/11/22 17:36:46 by icunha-t          #+#    #+#             */
+/*   Updated: 2024/11/22 17:53:47 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
-
-#include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
 
-char	*get_next_line(int fd);
-void	*ft_calloc(size_t nmemb, size_t size);
-void	*ft_memset(void *s, int c, size_t n);
-
-#endif
+int	main(void)
+{
+	int	fd;
+	fd = open("textfile.txt", O_RDWR | O_CREAT | O_APPEND);
+	printf("fd of file is %d", fd);
+	write (fd, "hello", 5);
+	dup2(1, fd);
+	return (0);
+}
