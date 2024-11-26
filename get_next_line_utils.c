@@ -6,36 +6,111 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:23:17 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/22 17:05:54 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:45:37 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+int	found_newline(t_list *list)
 {
-	size_t	i;
-	unsigned char	*temp;
+	int	i;
 
-	i = 0;
-	temp = (unsigned char *)s;
-	while (i < n)
+	if (!list)
+		return (0);
+	while (list)
 	{
-		temp[i] = (unsigned char)c;
-		i++;
+		i = 0;
+		while (list->str_buff[i] && i < BUFFER_SIZE)
+		{
+			if (list->str_buff[i] == '\n')
+				return (1);
+			++i;
+		}
+		list = list->next;
 	}
-	return (s);
+	return (0);
+}
+int	len_new_line(t_list *list)
+{
+	int	i;
+	int	len;
+	
+	if (!list)
+		return (0);
+	len = 0;
+	while (list)
+	{
+		i = 0;
+		while (list->str_buff[i])
+		{
+			if(list->str_buff[i] == '\n')
+			{
+				++len;
+				return(len);
+			}
+			++i;
+			++len;
+		}
+		list = list->next;
+	}
+	return (len);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	copy_str(t_list *list, char *str)
 {
-	char	*dest;
+	int	i;
+	int	j;
 
-	if (nmemb == 0 || size == 0)
+	if (!list)
+		return ;
+	j = 0;
+	while (list)
+	{
+		i = 0;
+		while (list->str_buff[i])
+		{
+			if (list->str_buff[i] == '\n')
+			{
+				str[j++] = '\n';
+				str[j] = '\0';
+				return ;
+			}
+			str[j++] = list->str_buff[i++];
+		}
+		list = list->next;
+	}
+	str[j] = '\0';
+}
+
+t_list	*find_last_node(t_list *list)
+{
+	if (!list)
 		return (NULL);
-	dest = malloc(nmemb * size);
-	if (!dest)
-		return (NULL);
-	ft_memset(dest, 0, nmemb * size);
-	return ((void *)dest);
+	while (list->next)
+		list = list->next;
+	return (list);
+}
+
+void	dealloc(t_list **list, t_list *clean_node, char *buffer)
+{
+	t_list *temp;
+	
+	if(!*list)
+		return ;
+	while (*list)
+	{
+		temp = (*list)->next;
+		free((*list)->str_buff);
+		free(*list);
+		*list = temp;
+	}
+	*list = NULL;
+	if(clean_node->str_buff[0])
+		*list = clean_node;
+	else
+	{
+		free(buffer);
+		free(clean_node); 
+	}
 }
