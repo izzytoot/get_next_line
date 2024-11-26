@@ -6,13 +6,13 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:23:17 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/25 16:45:37 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:49:26 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	found_newline(t_list *list)
+int	ft_newline(t_list *list)
 {
 	int	i;
 
@@ -57,7 +57,7 @@ int	len_new_line(t_list *list)
 	return (len);
 }
 
-void	copy_str(t_list *list, char *str)
+void	ft_copy_str(t_list *list, char *str)
 {
 	int	i;
 	int	j;
@@ -92,7 +92,7 @@ t_list	*find_last_node(t_list *list)
 	return (list);
 }
 
-void	dealloc(t_list **list, t_list *clean_node, char *buffer)
+void	ft_dealloc(t_list **list, t_list *clean_node, char *buffer)
 {
 	t_list *temp;
 	

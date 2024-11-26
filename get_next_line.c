@@ -6,19 +6,19 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:17:28 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/26 12:24:27 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:49:32 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	polish_list(t_list **list)
+void	ft_polish_list(t_list **list)
 {
 	t_list *last_node;
 	t_list *clean_node;
 	int	i;
 	int	j;
-	int	*buffer;
+	char	*buffer;
 	
 	buffer = malloc(BUFFER_SIZE + 1);
 	clean_node = malloc(sizeof(t_list));
@@ -32,11 +32,11 @@ void	polish_list(t_list **list)
 	while (last_node->str_buff[i] && last_node->str_buff[++i])
 		buffer[j++] = last_node->str_buff[i];
 	buffer[j] = '\0';
-	clean_node->str_buff = (char *)buffer;
+	clean_node->str_buff = buffer;
 	clean_node->next = NULL;
-	dealloc(list, clean_node, (char *)buffer);
+	ft_dealloc(list, clean_node, buffer);
 }
-char	*get_line(t_list *list)
+char	*ft_get_line(t_list *list)
 {
 	int	str_len;
 	char	*next_str;
@@ -47,7 +47,7 @@ char	*get_line(t_list *list)
 	next_str = malloc(str_len + 1);
 	if (!next_str)
 		return (NULL);
-	copy_str(list, next_str);
+	ft_copy_str(list, next_str);
 	return (next_str);
 }
 
@@ -72,7 +72,7 @@ void	ft_new_list(t_list **list, int fd)
 	int	read_chars;
 	char	*buffer;
 	
-	while (!found_newline(*list))
+	while (!ft_newline(*list))
 	{
 		buffer = malloc(BUFFER_SIZE + 1);
 		if (!buffer)
@@ -97,15 +97,15 @@ char	*get_next_line(int fd)
 	ft_new_list(&list, fd);
 	if (!list)
 		return (NULL);
-	next_line = get_line(list);
-	polish_list(&list);
+	next_line = ft_get_line(list);
+	ft_polish_list(&list);
 	return (next_line);
 }
 
 int	main(void)
 {
 	int	fd;
-	char	*line;
+	char	*next_line;
 	int	lines;
 	
 	lines = 1;
@@ -116,8 +116,8 @@ int	main(void)
 			return (1);
 		}
 
-	while ((line = get_next_line(fd)) != NULL)
-		printf("%d->%s\n", lines++, line);
+	while ((next_line = get_next_line(fd)) != NULL)
+		printf("%d -> %s\n", lines++, next_line);
 	close(fd);
 	return(0);
 }
