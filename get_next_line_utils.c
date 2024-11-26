@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:23:17 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/26 12:49:26 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:14:29 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,21 @@ int	ft_newline(t_list *list)
 	}
 	return (0);
 }
+
+t_list	*find_last_node(t_list *list)
+{
+	if (!list)
+		return (NULL);
+	while (list->next)
+		list = list->next;
+	return (list);
+}
+
 int	len_new_line(t_list *list)
 {
 	int	i;
 	int	len;
-	
+
 	if (!list)
 		return (0);
 	len = 0;
@@ -44,10 +54,10 @@ int	len_new_line(t_list *list)
 		i = 0;
 		while (list->str_buff[i])
 		{
-			if(list->str_buff[i] == '\n')
+			if (list->str_buff[i] == '\n')
 			{
 				++len;
-				return(len);
+				return (len);
 			}
 			++i;
 			++len;
@@ -83,20 +93,11 @@ void	ft_copy_str(t_list *list, char *str)
 	str[j] = '\0';
 }
 
-t_list	*find_last_node(t_list *list)
-{
-	if (!list)
-		return (NULL);
-	while (list->next)
-		list = list->next;
-	return (list);
-}
-
 void	ft_dealloc(t_list **list, t_list *clean_node, char *buffer)
 {
-	t_list *temp;
-	
-	if(!*list)
+	t_list	*temp;
+
+	if (!*list)
 		return ;
 	while (*list)
 	{
@@ -106,11 +107,11 @@ void	ft_dealloc(t_list **list, t_list *clean_node, char *buffer)
 		*list = temp;
 	}
 	*list = NULL;
-	if(clean_node->str_buff[0])
+	if (clean_node->str_buff[0])
 		*list = clean_node;
 	else
 	{
 		free(buffer);
-		free(clean_node); 
+		free(clean_node);
 	}
 }
