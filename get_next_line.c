@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:17:28 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/27 14:17:09 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:43:57 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,16 @@ void	ft_new_list(t_list **list, int fd)
 		if (buffer == NULL)
 			return ;
 		nb_chars = read(fd, buffer, BUFFER_SIZE);
-		if (nb_chars = -1)
+		if (nb_chars == -1)
 		{
 			free (buffer);
-			free(*list);
+			ft_free_list(list);
 			*list = NULL;
 			return ;
 		}
 		if (!nb_chars)
 		{
 			free (buffer);
-			*list = NULL;
 			return ;
 		}
 		buffer[nb_chars] = '\0';

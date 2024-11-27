@@ -6,11 +6,23 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:23:17 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/27 10:54:46 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:43:28 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void ft_free_list(t_list **list) 
+{
+    t_list *temp;
+    while (*list) 
+	{
+        temp = (*list)->next;
+        free((*list)->str_buff);
+        free(*list);
+        *list = temp;
+    }
+}
 
 int	ft_newline(t_list *list)
 {
