@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:17:28 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/26 17:12:26 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/27 11:24:46 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	ft_new_list(&list, fd);
-	if (!list)
+	if (list == NULL)
 		return (NULL);
 	next_line = ft_get_line(list);
 	ft_polish_list(&list);
@@ -30,21 +30,27 @@ char	*get_next_line(int fd)
 void	ft_new_list(t_list **list, int fd)
 {
 	int		nb_chars;
-	char	*new_buffer;
+	char	*buffer;
 
 	while (!ft_newline(*list))
 	{
-		new_buffer = malloc(BUFFER_SIZE + 1);
-		if (!new_buffer)
+		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (buffer == NULL)
 			return ;
-		nb_chars = read(fd, new_buffer, BUFFER_SIZE);
-		if (!nb_chars)
+		nb_chars = read(fd, buffer, BUFFER_SIZE);
+		if (nb_chars < 0)
 		{
-			free (new_buffer);
+			free (buffer);
+			free(*list);
 			return ;
 		}
-		new_buffer[nb_chars] = '\0';
-		ft_put_buffer_in_list(list, new_buffer);
+		if (!nb_chars)
+		{
+			free (buffer);
+			return ;
+		}
+		buffer[nb_chars] = '\0';
+		ft_put_buffer_in_list(list, buffer);
 	}
 }
 
@@ -55,9 +61,9 @@ void	ft_put_buffer_in_list(t_list **list, char *buffer)
 
 	last_node = find_last_node(*list);
 	new_node = malloc(sizeof(t_list));
-	if (!new_node)
+	if (new_node == NULL)
 		return ;
-	if (!last_node)
+	if (last_node == NULL)
 		*list = new_node;
 	else
 		last_node->next = new_node;
@@ -70,11 +76,11 @@ char	*ft_get_line(t_list *list)
 	int		str_len;
 	char	*next_str;
 
-	if (!list)
+	if (list == NULL)
 		return (NULL);
 	str_len = len_new_line(list);
-	next_str = malloc(str_len + 1);
-	if (!next_str)
+	next_str = malloc(sizeof(char) * (str_len + 1));
+	if (next_str == NULL)
 		return (NULL);
 	ft_copy_str(list, next_str);
 	return (next_str);
@@ -88,16 +94,16 @@ void	ft_polish_list(t_list **list)
 	int		j;
 	char	*buffer;
 
-	buffer = malloc(BUFFER_SIZE + 1);
+	buffer = malloc(sizeof(t_list) * (BUFFER_SIZE + 1));
 	clean_node = malloc(sizeof(t_list));
-	if (!buffer || !clean_node)
+	if (buffer == NULL || clean_node == NULL)
 		return ;
 	last_node = find_last_node(*list);
 	i = 0;
 	j = 0;
-	while (last_node->str_buff[i] && last_node->str_buff[i] != '\n')
+	while (last_node->str_buff[i] && (last_node->str_buff[i] != '\n'))
 		++i;
-	while (last_node->str_buff[i] && last_node->str_buff[++i])
+	while (last_node->str_buff[i] && (last_node->str_buff[++i]))
 		buffer[j++] = last_node->str_buff[i];
 	buffer[j] = '\0';
 	clean_node->str_buff = buffer;

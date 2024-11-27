@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:23:17 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/26 17:14:29 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:54:46 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_newline(t_list *list)
 {
 	int	i;
 
-	if (!list)
+	if (list == NULL)
 		return (0);
 	while (list)
 	{
@@ -34,7 +34,7 @@ int	ft_newline(t_list *list)
 
 t_list	*find_last_node(t_list *list)
 {
-	if (!list)
+	if (list == NULL)
 		return (NULL);
 	while (list->next)
 		list = list->next;
@@ -46,7 +46,7 @@ int	len_new_line(t_list *list)
 	int	i;
 	int	len;
 
-	if (!list)
+	if (list == NULL)
 		return (0);
 	len = 0;
 	while (list)
@@ -59,8 +59,8 @@ int	len_new_line(t_list *list)
 				++len;
 				return (len);
 			}
-			++i;
 			++len;
+			++i;
 		}
 		list = list->next;
 	}
@@ -72,7 +72,7 @@ void	ft_copy_str(t_list *list, char *str)
 	int	i;
 	int	j;
 
-	if (!list)
+	if (list == NULL)
 		return ;
 	j = 0;
 	while (list)
@@ -97,7 +97,7 @@ void	ft_dealloc(t_list **list, t_list *clean_node, char *buffer)
 {
 	t_list	*temp;
 
-	if (!*list)
+	if (*list == NULL)
 		return ;
 	while (*list)
 	{
@@ -111,7 +111,7 @@ void	ft_dealloc(t_list **list, t_list *clean_node, char *buffer)
 		*list = clean_node;
 	else
 	{
-		free(buffer);
 		free(clean_node);
+		free(buffer);
 	}
 }
