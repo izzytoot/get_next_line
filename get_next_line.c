@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:17:28 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/27 14:43:57 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:53:55 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_new_list(t_list **list, int fd)
 		if (nb_chars == -1)
 		{
 			free (buffer);
-			ft_dealloc(list);
+			ft_dealloc(list, NULL, NULL);
 			*list = NULL;
 			return ;
 		}
@@ -109,12 +109,5 @@ void	ft_polish_list(t_list **list)
 	buffer[j] = '\0';
 	clean_node->str_buff = buffer;
 	clean_node->next = NULL;
-	ft_dealloc(list);
-	if (clean_node->str_buff[0])
-		*list = clean_node;
-	else
-	{
-		free(clean_node);
-		free(buffer);
-	}
+	ft_dealloc(list, clean_node, buffer);
 }

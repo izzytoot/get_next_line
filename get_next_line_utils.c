@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:23:17 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/27 14:43:28 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:59:56 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	ft_copy_str(t_list *list, char *str)
 	str[j] = '\0';
 }
 
-void	ft_dealloc(t_list **list)
+void	ft_dealloc(t_list **list, t_list *clean_node, char *buffer)
 {
 	t_list	*temp;
 
@@ -107,4 +107,13 @@ void	ft_dealloc(t_list **list)
 		*list = temp;
 	}
 	*list = NULL;
+	if (!clean_node || !buffer)
+		return ;
+	if (clean_node->str_buff[0])
+		*list = clean_node;
+	else
+	{
+		free(clean_node);
+		free(buffer);
+	}
 }
