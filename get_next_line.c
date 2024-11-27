@@ -41,7 +41,7 @@ void	ft_new_list(t_list **list, int fd)
 		if (nb_chars == -1)
 		{
 			free (buffer);
-			ft_free_list(list);
+			ft_dealloc(list);
 			*list = NULL;
 			return ;
 		}
@@ -109,5 +109,12 @@ void	ft_polish_list(t_list **list)
 	buffer[j] = '\0';
 	clean_node->str_buff = buffer;
 	clean_node->next = NULL;
-	ft_dealloc(list, clean_node, buffer);
+	ft_dealloc(list);
+	if (clean_node->str_buff[0])
+		*list = clean_node;
+	else
+	{
+		free(clean_node);
+		free(buffer);
+	}
 }

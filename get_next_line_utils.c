@@ -12,18 +12,6 @@
 
 #include "get_next_line.h"
 
-void ft_free_list(t_list **list) 
-{
-    t_list *temp;
-    while (*list) 
-	{
-        temp = (*list)->next;
-        free((*list)->str_buff);
-        free(*list);
-        *list = temp;
-    }
-}
-
 int	ft_newline(t_list *list)
 {
 	int	i;
@@ -105,7 +93,7 @@ void	ft_copy_str(t_list *list, char *str)
 	str[j] = '\0';
 }
 
-void	ft_dealloc(t_list **list, t_list *clean_node, char *buffer)
+void	ft_dealloc(t_list **list)
 {
 	t_list	*temp;
 
@@ -119,11 +107,4 @@ void	ft_dealloc(t_list **list, t_list *clean_node, char *buffer)
 		*list = temp;
 	}
 	*list = NULL;
-	if (clean_node->str_buff[0])
-		*list = clean_node;
-	else
-	{
-		free(clean_node);
-		free(buffer);
-	}
 }
