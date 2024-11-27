@@ -6,7 +6,7 @@
 /*   By: icunha-t <icunha-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:17:28 by icunha-t          #+#    #+#             */
-/*   Updated: 2024/11/27 11:24:46 by icunha-t         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:46:43 by icunha-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ void	ft_new_list(t_list **list, int fd)
 		if (buffer == NULL)
 			return ;
 		nb_chars = read(fd, buffer, BUFFER_SIZE);
-		if (nb_chars < 0)
+		if (nb_chars = -1)
 		{
 			free (buffer);
 			free(*list);
+			*list = NULL;
 			return ;
 		}
 		if (!nb_chars)
@@ -110,7 +111,3 @@ void	ft_polish_list(t_list **list)
 	clean_node->next = NULL;
 	ft_dealloc(list, clean_node, buffer);
 }
-
-
-
-
