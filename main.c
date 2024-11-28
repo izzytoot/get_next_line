@@ -10,12 +10,12 @@ int	main(int ac, char **av)
 	if (ac != 2)
 	{
 		printf("Error");
-        return 1;
+        	return 1;
 	}
 	fd = open(av[1], O_RDONLY);
     if (fd == -1) 
     {
-        printf("Error opening file.\n");
+        	printf("NULL");
 		close(fd);
 		return (1);
     }
